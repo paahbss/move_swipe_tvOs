@@ -24,7 +24,7 @@ class GameViewController: UIViewController {
         setupScene()
         setupCamera()
         setupTube()
-        setupTable()
+        //setupTable()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         self.scnView.addGestureRecognizer(tapGesture)
     }
@@ -40,6 +40,7 @@ class GameViewController: UIViewController {
     private func setupScene() {
         self.scnScene = SCNScene()
         self.scnView.scene = self.scnScene
+        self.scnScene.background.contents = UIImage(named: "background")
     }
     private func setupCamera() {
         self.cameraNode = SCNNode()
@@ -50,11 +51,14 @@ class GameViewController: UIViewController {
         self.scnScene.rootNode.addChildNode(self.cameraNode)
     }
     private func setupTube() {
+        let material = SCNMaterial()
+        material.diffuse.contents = UIImage(named: "tube")
         self.tube = SCNTube(innerRadius: 0.25, outerRadius: 0.5, height: 5.0)
         let node = SCNNode(geometry: self.tube)
         node.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         node.position = SCNVector3(x: 0.0, y: -2.5, z: 12)
         node.eulerAngles = SCNVector3Make(-80, 0, 0);
+        self.tube.materials = [material]
         self.scnScene.rootNode.addChildNode(node)
     }
     private func setupTable() {
@@ -63,7 +67,6 @@ class GameViewController: UIViewController {
         let node = SCNNode(geometry: self.table)
         node.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         node.position = SCNVector3(x: 0.0, y: 0.0, z: 12)
-        node.eulerAngles = SCNVector3Make(0, 0, 0);
         self.scnScene.rootNode.addChildNode(node)
     }
     @objc
