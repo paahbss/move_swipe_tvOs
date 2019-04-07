@@ -24,7 +24,7 @@ class GameViewController: UIViewController {
         setupScene()
         setupCamera()
         setupTube()
-        //setupTable()
+        setupTable()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         self.scnView.addGestureRecognizer(tapGesture)
     }
@@ -32,9 +32,9 @@ class GameViewController: UIViewController {
         if  let scnView = self.view as? SCNView {
             self.scnView = scnView
             self.scnView.scene = self.scnScene
-            self.scnView.allowsCameraControl = true
+            self.scnView.allowsCameraControl = false
             self.scnView.showsStatistics = true
-            self.scnView.backgroundColor = UIColor.black
+            //self.scnView.backgroundColor = UIColor.black
         }
     }
     private func setupScene() {
@@ -62,12 +62,11 @@ class GameViewController: UIViewController {
         self.scnScene.rootNode.addChildNode(node)
     }
     private func setupTable() {
-        let widthScreen = UIScreen.main.bounds.width
-        self.table = SCNPlane(width: 20, height: 20)
-        let node = SCNNode(geometry: self.table)
-        node.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-        node.position = SCNVector3(x: 0.0, y: 0.0, z: 12)
-        self.scnScene.rootNode.addChildNode(node)
+        guard let tableNode = SCNScene.loadSceneNode(sceneName: "table.scn", nodeName: "table") else { return }
+        tableNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
+        tableNode.position = SCNVector3(x: 0.0, y: -5, z: -5)
+        tableNode.rotation = SCNVector4(1, 0, 0, 20)
+        self.scnScene.rootNode.addChildNode(tableNode)
     }
     @objc
     func handleTap(_ gestureRecognize: UIGestureRecognizer) {
