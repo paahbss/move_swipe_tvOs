@@ -59,24 +59,16 @@ class GameViewController: UIViewController {
         self.cameraNode = SCNNode()
         self.cameraNode.camera = SCNCamera()
         self.cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
-//        self.cameraNode.camera?.fieldOfView = 90
+        self.cameraNode.camera?.fieldOfView = 90
         self.cameraNode.eulerAngles = SCNVector3Make(0, 0, 0);
         self.scnScene.rootNode.addChildNode(self.cameraNode)
-        
-//        SCNNode *cameraNode = [SCNNode node];
-//        cameraNode.camera = [SCNCamera camera];
-//        cameraNode.camera.zFar = 200;
-//        cameraNode.camera.zNear = 0.1;
-//        [scene.rootNode addChildNode:cameraNode];
-//        cameraNode.position = SCNVector3Make(0, 5, 0);
-//        cameraNode.eulerAngles = SCNVector3Make(0, 0, 0);
     }
     private func setupTube(){
         self.tube = SCNTube(innerRadius: 0.25, outerRadius: 0.5, height: 5.0)
         let node = SCNNode(geometry: self.tube)
         node.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-        node.position = SCNVector3(x: 0.0, y: 0.0, z: 0.0)
-        node.rotation = SCNVector4(0, 0, -10, 1)
+        node.position = SCNVector3(x: 0.0, y: -2.5, z: 12)
+        node.eulerAngles = SCNVector3Make(-80, 0, 0);
         self.scnScene.rootNode.addChildNode(node)
 
     }
